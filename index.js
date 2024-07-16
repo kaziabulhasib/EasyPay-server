@@ -23,6 +23,21 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    const userCollection = client.db("easyPay").collection("users");
+
+    // get user
+    app.get("/users", async (req, res) => {
+      const result = await userCollection.find().toArray();
+      res.send(result);
+    });
+
+    // post users
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      console.log("new user", user);
+      const result = await userCollection.insertOne(user);
+      res.send(result);
+    });
     // Connect the client to the server (optional starting in v4.7)
     // await client.connect();
     // Send a ping to confirm a successful connection
