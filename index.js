@@ -35,6 +35,8 @@ async function run() {
     // post users
     app.post("/users", async (req, res) => {
       const user = req.body;
+
+      // pin hashing : to do
       if (user.pin) {
         const salt = bcrypt.genSaltSync(10);
         user.pin = bcrypt.hashSync(user.pin, salt);
