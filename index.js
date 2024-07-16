@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const app = express();
@@ -34,6 +35,10 @@ async function run() {
     // post users
     app.post("/users", async (req, res) => {
       const user = req.body;
+      if (user.pin) {
+        const salt = bcrypt.genSaltSync(10);
+        user.pin = bcrypt.hashSync(user.pin, salt);
+      }
       console.log("new user", user);
       const result = await userCollection.insertOne(user);
       res.send(result);
