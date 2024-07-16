@@ -45,6 +45,13 @@ async function run() {
       const result = await userCollection.insertOne(user);
       res.send(result);
     });
+
+    // transaction history
+
+    app.get("/payment", async (req, res) => {
+      const result = await userCollection.find().toArray();
+      res.send(result);
+    });
     // Connect the client to the server (optional starting in v4.7)
     // await client.connect();
     // Send a ping to confirm a successful connection
