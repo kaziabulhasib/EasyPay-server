@@ -41,17 +41,18 @@ async function run() {
         const salt = bcrypt.genSaltSync(10);
         user.pin = bcrypt.hashSync(user.pin, salt);
       }
-      console.log("new user", user);
+      // console.log("new user", user);
       const result = await userCollection.insertOne(user);
       res.send(result);
     });
 
-    // transaction history
+    // all  transaction history
 
     app.get("/payment", async (req, res) => {
       const result = await userCollection.find().toArray();
       res.send(result);
     });
+
     // Connect the client to the server (optional starting in v4.7)
     // await client.connect();
     // Send a ping to confirm a successful connection
